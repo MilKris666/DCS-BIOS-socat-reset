@@ -51,6 +51,9 @@ This cleanly reinitializes `socat` **before the Arduino expects new data**, elim
 3. Create a **shortcut** to your `multiple-com-ports.cmd` file and set its properties to **"Run minimized"**.  
    This ensures the script stays in the background and doesn’t pop up on screen.
 
+4. **Start the PowerShell script before launching DCS.**  
+   There’s no need to manually run `multiple-com-ports.cmd`, since the PowerShell script handles everything automatically once the mission starts.
+
 ---
 
 Feel free to contribute improvements or feedback!
