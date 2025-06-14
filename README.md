@@ -1,12 +1,12 @@
 # 🛠 Problem: DCS-BIOS loses connection to Arduino Mega on mission restart
 
-## 🧩 Description  
+## Description  
 When starting a new mission in DCS World, the USB-connected **Arduino Mega** loses its connection to **DCS-BIOS**. LEDs and displays freeze, and inputs from buttons or encoders stop working — even though the connection was stable before.
 
-## 🧠 Cause  
+## Cause  
 This issue occurs **when a new mission is loaded**. During this process, DCS internally stops and restarts some systems, which causes the **serial connection to be interrupted**. When using `socat.exe` (or similar tools), this leads to a communication failure with the Arduino. The Arduino essentially locks up, waiting for data that never arrives.
 
-## ✅ Solution: Automatically reset `socat` on mission start  
+## Solution: Automatically reset `socat` on mission start  
 A PowerShell script monitors the `dcs.log` file in real time and reacts to the start of a new mission. It looks for the following log entries:
 
 - `"Dispatcher (Main): Stop"` → terminates `socat.exe`  
@@ -14,7 +14,7 @@ A PowerShell script monitors the `dcs.log` file in real time and reacts to the s
 
 This cleanly reinitializes `socat` **before the Arduino expects new data**, eliminating the need for manual intervention.
 
-> ⚠️ **IMPORTANT:**  
+> **IMPORTANT:**  
 > In order for the Arduino to reconnect properly with DCS-BIOS, the mission must be **fully started and unpaused** *before* the `multiple-com-ports.cmd` script re-establishes the `socat` connection. Otherwise, the Arduino may crash.  
 >  
 > This script waits for the log entry:  
@@ -22,11 +22,11 @@ This cleanly reinitializes `socat` **before the Arduino expects new data**, elim
 > and then launches `multiple-com-ports.cmd` **10 seconds later**.  
 > This ensures the player is in the cockpit and the mission has started.  
 >  
-> 👉 **Be sure to unpause the mission right after loading it!**
+> **Be sure to unpause the mission right after loading it!**
 
 ---
 
-## 📜 Benefits  
+## Benefits  
 - ✅ No need to physically reconnect the Arduino  
 - ✅ No more crashes or lockups after switching missions  
 - ✅ Script runs in the background with minimal CPU usage
