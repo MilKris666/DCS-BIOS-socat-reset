@@ -52,7 +52,8 @@ This cleanly reinitializes `socat` **before the Arduino expects new data**, elim
    This ensures the script stays in the background and doesn’t pop up on screen.
 
 4. **Start the PowerShell script before launching DCS.**  
-   There’s no need to manually run `multiple-com-ports.cmd`, since the PowerShell script handles everything automatically once the mission starts.
+   There’s no need to manually run `multiple-com-ports.cmd`, since the PowerShell script handles everything automatically once the mission starts. 
+   It takes about 5 to 10 seconds in-game until the Arduinos start working.
 
 ---
 
